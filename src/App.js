@@ -23,11 +23,26 @@ ChartJs.register(
 );
 
 function App() {
+  var startingWeightForDay = 20;
+  const daysWeight = (currnetWeight) => {
+    const usedWeight = startingWeightForDay - currnetWeight;
+    startingWeightForDay = currnetWeight;
+    console.log(startingWeightForDay);
+    return usedWeight;
+  };
   const [data, setData] = useState({
-    labels: ["#1C1B52", "#FDBD2B"],
+    labels: ["mon", "tues", "wed", "thurs", "fri", "sat", "sun"],
     datasets: [
       {
-        data: [10, 20, 30],
+        data: [
+          daysWeight(17),
+          daysWeight(14),
+          daysWeight(8),
+          daysWeight(5),
+          daysWeight(0),
+          daysWeight(0),
+          daysWeight(0),
+        ],
         backgroundColor: ["#2A297D", "#FDBD2B"],
         barThickness: 30,
         borderWidth: 2,
@@ -45,11 +60,8 @@ function App() {
           // console.log("ress: ", res);
         })
         .then((res) => {
-          console.log("res: ", res);
-          const label = [];
           const data = [];
           for (var i of 7) {
-            label.push(i.name);
             data.push(i.id);
           }
           setData({
@@ -61,7 +73,6 @@ function App() {
             ],
 
             // These labels appear in the legend and in the tooltips when hovering different arcs
-            labels: label,
           });
         })
         .catch((e) => {
