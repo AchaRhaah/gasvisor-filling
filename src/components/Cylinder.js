@@ -3,7 +3,7 @@ import "./styles.css";
 
 function Cylinder() {
   const startingWeight = 20;
-  const currentWeight = 19;
+  const currentWeight = 9;
   const percentageRemaining = (initialWeight, presentWeight) => {
     var remainingPercent =
       100 - ((initialWeight - presentWeight) / initialWeight) * 100;

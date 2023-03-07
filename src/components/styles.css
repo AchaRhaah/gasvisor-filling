@@ -57,3 +57,27 @@
         transform: translateX(-50%);
     }
 }
+.container {
+    width: "366px";
+    height: "266px";
+    background-color: "red";
+    border-radius: "25px";
+    display: "flex";
+    flex-direction: "column";
+    align-items: "center";
+    padding: "2em";
+    margin-top: "10em";
+}
+
+.chart-header-container {
+    width: "100%";
+    display: "flex";
+    justify-content: "space-between";
+}
+
+.chart-heading {
+    font-weight: 400;
+    font-size: '16px';
+    color: rgba(26, 27, 48, 0.5);
+
+}
