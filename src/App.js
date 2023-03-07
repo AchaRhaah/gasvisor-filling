@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "./App.css";
 
 import {
   Chart as ChartJs,
@@ -24,80 +25,57 @@ ChartJs.register(
 
 function App() {
   var startingWeightForDay = 20;
+  const weightOfFullBottle = 20;
+  const currentWeight = 9;
+  // const backgroundArray = []
+
+  const percentageRemaining = (presentWeight) => {
+    var remainingPercent =
+      100 - ((weightOfFullBottle - presentWeight) / weightOfFullBottle) * 100;
+    remainingPercent = Math.floor(remainingPercent);
+    return remainingPercent;
+  };
+
   const daysWeight = (currnetWeight) => {
     const usedWeight = startingWeightForDay - currnetWeight;
     startingWeightForDay = currnetWeight;
     console.log(startingWeightForDay);
-    return usedWeight;
+    var percentage = percentageRemaining(currnetWeight);
+    return { usedWeight, percentage };
   };
+
   const [data, setData] = useState({
     labels: ["mon", "tues", "wed", "thurs", "fri", "sat", "sun"],
     datasets: [
       {
         data: [
-          daysWeight(17),
-          daysWeight(14),
-          daysWeight(8),
-          daysWeight(5),
-          daysWeight(0),
-          daysWeight(0),
-          daysWeight(0),
+          daysWeight(17).usedWeight,
+          daysWeight(14).usedWeight,
+          daysWeight(8).usedWeight,
+          daysWeight(5).usedWeight,
+          daysWeight(3).usedWeight,
+          daysWeight(2).usedWeight,
+          daysWeight(0).usedWeight,
         ],
         backgroundColor: ["#2A297D", "#FDBD2B"],
         barThickness: 30,
         borderWidth: 2,
-        borderRadius: 20, // This will round the corners
+        borderRadius: 20,
         borderSkipped: false,
       },
     ],
   });
-  useEffect(() => {
-    const fetchData = () => {
-      fetch("https://jsonplaceholder.typicode.com/users")
-        .then((data) => {
-          const res = data.json();
-          return res;
-          // console.log("ress: ", res);
-        })
-        .then((res) => {
-          const data = [];
-          for (var i of 7) {
-            data.push(i.id);
-          }
-          setData({
-            datasets: [
-              {
-                data: data,
-                backgroundColor: ["#1C1B52", "#FDBD2B"],
-              },
-            ],
-
-            // These labels appear in the legend and in the tooltips when hovering different arcs
-          });
-        })
-        .catch((e) => {
-          console.log("error: ", e);
-        });
-    };
-    fetchData();
-  }, []);
   return (
-    <div
-      className="App"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        // justifyContent: "center",
-        alignItems: "center",
-        width: "100vw",
-        height: "100vh",
-      }}
-    >
-      <h1 style={{ fontSize: "2.5em", color: "#1C1B52", fontWeight: "normal" }}>
-        Cylinder 1
-      </h1>
-      <Cylinder />
-      <Barchart chartData={data} />
+    <div className="App">
+      <h1 className="heading">Cylinder 1</h1>
+      <div className="graph-container">
+        <di>
+          <Cylinder percentageRemaining={percentageRemaining(currentWeight)} />
+        </di>
+        <di>
+          <Barchart chartData={data} />
+        </di>
+      </div>
     </div>
   );
 }

@@ -1,31 +1,20 @@
 import React from "react";
 import "./styles.css";
 
-function Cylinder() {
-  const startingWeight = 20;
-  const currentWeight = 9;
-  const percentageRemaining = (initialWeight, presentWeight) => {
-    var remainingPercent =
-      100 - ((initialWeight - presentWeight) / initialWeight) * 100;
-    remainingPercent = Math.floor(remainingPercent);
-    return remainingPercent;
-  };
+function Cylinder({ percentageRemaining }) {
   return (
-    <div style={{ width: "20em", height: "20em", marginBottom: "1em" }}>
+    <div className="cylinder-container">
+      <img src={require("./top.png")} alt="" className="top" />
       <div className="cylinder">
         <div
           style={{
-            height: `${
-              percentageRemaining(startingWeight, currentWeight) - 10
-            }%`,
+            height: `${percentageRemaining - 10}%`,
           }}
           className="level"
         >
           <div className="wave"></div>
           <div className="wave"></div>
-          <p className="percent">
-            {percentageRemaining(startingWeight, currentWeight)}%
-          </p>
+          <p className="percent">{percentageRemaining}%</p>
         </div>
       </div>
     </div>
