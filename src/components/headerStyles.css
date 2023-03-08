@@ -1,0 +1,29 @@
+.header {
+    border-bottom: 1px solid #eeecec;
+    width: 87%;
+    height: 7em;
+    display: flex;
+    align-items: center;
+    padding-left: 6.5em;
+    padding-right: 6.5em;
+    justify-content: space-between;
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    width: 20em;
+    justify-content: space-between;
+    /* justify-content: center; */
+}
+
+.welcome {
+    font-size: 1.25em;
+    font-weight: 500;
+}
+
+.profile {
+    width: 5em;
+    height: 5em;
+    border-radius: 50%;
+}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./App.css";
 
 import {
@@ -13,6 +13,7 @@ import {
 } from "chart.js";
 import Cylinder from "./components/Cylinder";
 import Barchart from "./components/Barchart";
+import Header from "./components/Header";
 ChartJs.register(
   Tooltip,
   Title,
@@ -24,49 +25,73 @@ ChartJs.register(
 );
 
 function App() {
-  var startingWeightForDay = 20;
-  const weightOfFullBottle = 20;
-  const currentWeight = 9;
-  // const backgroundArray = []
+  var startingWeightForDay = 60;
+  const weightOfFullBottle = 60;
+  const currentWeight = 25;
+  const backgroundArray = [];
+  const emptyDays = [5, 5, 5, 5, 5, 5, 5];
+  var dt = new Date().getDay();
 
   const percentageRemaining = (presentWeight) => {
     var remainingPercent =
       100 - ((weightOfFullBottle - presentWeight) / weightOfFullBottle) * 100;
+
     remainingPercent = Math.floor(remainingPercent);
     return remainingPercent;
   };
 
-  const daysWeight = (currnetWeight) => {
+  const weightUsedPerDay = (currnetWeight) => {
     const usedWeight = startingWeightForDay - currnetWeight;
     startingWeightForDay = currnetWeight;
-    console.log(startingWeightForDay);
     var percentage = percentageRemaining(currnetWeight);
+    console.log("percentage from func", percentage);
     return { usedWeight, percentage };
   };
+  const weeklyUseageArr = [
+    weightUsedPerDay(40),
+    weightUsedPerDay(25),
+    weightUsedPerDay(15),
+    weightUsedPerDay(5),
+    weightUsedPerDay(3),
+    weightUsedPerDay(0),
+    weightUsedPerDay(0),
+  ];
 
+  var weeklyData = weeklyUseageArr.map((num) => {
+    return num.usedWeight;
+  });
+  console.log("week", weeklyData.slice(0, dt));
+  weeklyData = weeklyData.slice(0, dt).concat(emptyDays.slice(0, 7 - dt));
   const [data, setData] = useState({
     labels: ["mon", "tues", "wed", "thurs", "fri", "sat", "sun"],
     datasets: [
       {
-        data: [
-          daysWeight(17).usedWeight,
-          daysWeight(14).usedWeight,
-          daysWeight(8).usedWeight,
-          daysWeight(5).usedWeight,
-          daysWeight(3).usedWeight,
-          daysWeight(2).usedWeight,
-          daysWeight(0).usedWeight,
-        ],
-        backgroundColor: ["#2A297D", "#FDBD2B"],
+        data: weeklyData,
+        backgroundColor: backgroundArray,
         barThickness: 30,
-        borderWidth: 2,
         borderRadius: 20,
         borderSkipped: false,
       },
     ],
   });
+  const background = () => {
+    weeklyUseageArr.map((num, index) => {
+      dt - 1 < index
+        ? backgroundArray.push("#c9c9da")
+        : index === dt - 1 && num.percentage > 15
+        ? backgroundArray.push("#FDBD2B")
+        : num.percentage <= 15
+        ? backgroundArray.push("#E64646")
+        : backgroundArray.push("#2A297D");
+    });
+  };
+
+  background();
+  console.log("bg: ", backgroundArray);
+
   return (
     <div className="App">
+      <Header />
       <h1 className="heading">Cylinder 1</h1>
       <div className="graph-container">
         <di>
@@ -81,3 +106,4 @@ function App() {
 }
 
 export default App;
+// E64646;
