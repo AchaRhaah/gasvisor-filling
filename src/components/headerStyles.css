@@ -1,7 +1,7 @@
 .header {
     border-bottom: 1px solid #eeecec;
     width: 87%;
-    height: 7em;
+    height: 5em;
     display: flex;
     align-items: center;
     padding-left: 6.5em;
@@ -18,22 +18,22 @@
 }
 
 .welcome {
-    font-size: 1.25em;
-    font-weight: 500;
+    font-size: 1.1em;
+    font-weight: 300;
 }
 
 .profile {
-    width: 5em;
-    height: 5em;
+    width: 3.5em;
+        height: 3.5em;
     border-radius: 50%;
 }
 .gas-logo {
-    width: 18em;
-    height: 6em;
+    width: 10em;
+        height: 3.5em;
     object-fit: cover;
 }
 
 .logo {
-    width: 20em;
-    height: 7em;
+    width: 10em;
+        height: 3.5em;
 }

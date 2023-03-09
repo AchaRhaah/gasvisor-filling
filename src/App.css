@@ -4,13 +4,14 @@
       align-items: center;
     width: 100vw;
       height: 100vh;
+    overflow-y: hidden;
+      overflow-x: hidden;
     }
 
 .graph-container {
-  width: 60%;
+  width: 75%;
   justify-content: space-between;
   display: flex;
-  margin-top: 3em;
 }
 .heading {
   font-size: 2.5em;
