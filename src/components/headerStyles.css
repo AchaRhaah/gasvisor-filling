@@ -27,3 +27,13 @@
     height: 5em;
     border-radius: 50%;
 }
+.gas-logo {
+    width: 18em;
+    height: 6em;
+    object-fit: cover;
+}
+
+.logo {
+    width: 20em;
+    height: 7em;
+}

@@ -4,7 +4,9 @@ import "./headerStyles.css";
 function Header() {
   return (
     <div className="header">
-      <img src={require("../images/logo.png")} alt="" />
+      <div className="logo">
+        <img src={require("../images/logo.png")} alt="" className="gas-logo" />
+      </div>
       <div className="right">
         {/* <div> */}
         <p className="welcome">Welcome back MartMich</p>

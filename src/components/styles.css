@@ -28,12 +28,14 @@
 
 }
 
+
 .percent {
     top: -2.5em;
     color: rgba(42, 41, 125, 0.5);
     font-size: 30px;
     font-weight: 700;
 }
+
 
 .cylinder-caption {
     font-size: 1.5em;
