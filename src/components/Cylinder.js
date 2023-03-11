@@ -7,15 +7,15 @@ function Cylinder({ percentageRemaining }) {
       <div className="cylinder">
         <img src={require("../images/top.png")} alt="" className="top" />
         <div className="cylinder-body">
+          <p className="percent">{percentageRemaining}%</p>
           <div
             style={{
-              height: `${percentageRemaining - 10}%`,
+              height: `${percentageRemaining}%`,
             }}
             className="level"
           >
             <div className="wave"></div>
             <div className="wave"></div>
-            <p className="percent">{percentageRemaining}%</p>
           </div>
         </div>
       </div>

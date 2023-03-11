@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 
 import {
@@ -29,8 +29,27 @@ function App() {
   const weightOfFullBottle = 60;
   const currentWeight = 25;
   const backgroundArray = [];
+  var apiData = [];
+  const [percent, setPercent] = useState(0);
   const emptyDays = [5, 5, 5, 5, 5, 5, 5];
   var dt = new Date().getDay();
+
+  useEffect(() => {
+    fetch("https://api.gasvisor.eu/api/sensors/data", {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((data) => data.json())
+      .then((data) => {
+        apiData = data;
+        // console.log(apiData[data.length - 1].percentage_weight);
+        setPercent(Math.trunc(apiData[data.length - 1].percentage_weight));
+        console.log("percent", percent);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   const percentageRemaining = (presentWeight) => {
     var remainingPercent =
@@ -44,7 +63,6 @@ function App() {
     const usedWeight = startingWeightForDay - currnetWeight;
     startingWeightForDay = currnetWeight;
     var percentage = percentageRemaining(currnetWeight);
-    console.log("percentage from func", percentage);
     return { usedWeight, percentage };
   };
   const weeklyUseageArr = [
@@ -60,7 +78,6 @@ function App() {
   var weeklyData = weeklyUseageArr.map((num) => {
     return num.usedWeight;
   });
-  console.log("week", weeklyData.slice(0, dt));
   weeklyData = weeklyData.slice(0, dt).concat(emptyDays.slice(0, 7 - dt));
   const [data, setData] = useState({
     labels: ["mon", "tues", "wed", "thurs", "fri", "sat", "sun"],
@@ -87,7 +104,6 @@ function App() {
   };
 
   background();
-  console.log("bg: ", backgroundArray);
 
   return (
     <div className="App">
@@ -95,7 +111,7 @@ function App() {
       <h1 className="heading">Cylinder 1</h1>
       <div className="graph-container">
         <di>
-          <Cylinder percentageRemaining={percentageRemaining(currentWeight)} />
+          <Cylinder percentageRemaining={percent} />
         </di>
         <di>
           <Barchart chartData={data} />

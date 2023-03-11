@@ -16,6 +16,10 @@
     position: relative;
     height: 369px;
     width: 200px;
+    display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     background: linear-gradient(180deg, rgba(253, 189, 43, 0.2) 0%, rgba(252, 252, 252, 0.05) 100%);
     border-radius: 75px;
     overflow: hidden;
@@ -40,6 +44,7 @@
     color: rgba(42, 41, 125, 0.5);
     font-size: 30px;
     font-weight: 700;
+    z-index: 100;
 }
 
 
@@ -47,6 +52,7 @@
     font-size: 1.5em;
     color: rgba(26, 27, 48, 0.85);
     font-weight: 400;
+    padding-top: 0.5em;
 }
 .wave {
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 88.7'%3E%3Cpath d='M800 56.9c-155.5 0-204.9-50-405.5-49.9-200 0-250 49.9-394.5 49.9v31.8h800v-.2-31.6z' fill='%23FDBD2B'/%3E%3C/svg%3E");
