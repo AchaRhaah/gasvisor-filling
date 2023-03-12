@@ -9,14 +9,27 @@
 
 .graph-container {
   width: 57%;
-    height: 65%;
+    height: 60%;
   justify-content: space-between;
   display: flex;
 }
 
 @media screen and (max-width: 1380px) {
   .graph-container {
-    width: 65%;
+    width: 70%;
+      height: 65%;
+    }
+    
+    .heading {
+      font-size: 2em;
+    
+    }
+    }
+    
+    @media screen and (max-width: 1630) {
+      .graph-container {
+        /* width: 70%; */
+        height: 65%;
   }
 }
 /* @media screen and (max-width: 1080px) {
