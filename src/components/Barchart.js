@@ -1,7 +1,7 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
 import "./barchart.css";
-function Barchart({ chartData }) {
+function Barchart({ chartData, weightOfFullBottle }) {
   return (
     <div className="barchart-container">
       <div className="container">
@@ -34,6 +34,9 @@ function Barchart({ chartData }) {
             },
           }}
         />
+        <h4 className="chart-heading">
+          initial weight of full bottle: {weightOfFullBottle} kg
+        </h4>
       </div>
       <h3 className="caption">Real time weekly usage</h3>
     </div>

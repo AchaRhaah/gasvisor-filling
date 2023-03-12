@@ -25,14 +25,14 @@ ChartJs.register(
 );
 
 function App() {
-  var startingWeightForDay = 60;
-  const weightOfFullBottle = 60;
+  var startingWeightForDay = 105;
   const currentWeight = 25;
   const backgroundArray = [];
   var apiData = [];
-  const [percent, setPercent] = useState(0);
-  const emptyDays = [5, 5, 5, 5, 5, 5, 5];
-  var dt = new Date().getDay();
+  const [percent, setPercent] = useState(100);
+  const [weightOfFullBottle, setWeight] = useState(105);
+  const emptyDays = [2, 2, 2, 2, 2, 2, 2];
+  var dt = 7;
 
   useEffect(() => {
     fetch("https://api.gasvisor.eu/api/sensors/data", {
@@ -46,6 +46,7 @@ function App() {
         apiData = data;
         // console.log(apiData[data.length - 1].percentage_weight);
         setPercent(Math.trunc(apiData[data.length - 1].percentage_weight));
+        setWeight(Math.trunc(apiData[data.length - 1].cylinder_weigth_full));
         console.log("percent", percent);
       })
       .catch((err) => console.log(err));
@@ -66,19 +67,19 @@ function App() {
     return { usedWeight, percentage };
   };
   const weeklyUseageArr = [
+    weightUsedPerDay(90),
+    weightUsedPerDay(85),
+    weightUsedPerDay(77),
+    weightUsedPerDay(60),
+    weightUsedPerDay(50),
     weightUsedPerDay(40),
-    weightUsedPerDay(25),
-    weightUsedPerDay(15),
-    weightUsedPerDay(5),
-    weightUsedPerDay(3),
-    weightUsedPerDay(0),
-    weightUsedPerDay(0),
+    weightUsedPerDay(35),
   ];
 
   var weeklyData = weeklyUseageArr.map((num) => {
     return num.usedWeight;
   });
-  weeklyData = weeklyData.slice(0, dt).concat(emptyDays.slice(0, 7 - dt));
+  // weeklyData = weeklyData.slice(0, dt).concat(emptyDays.slice(0, 7 - dt));
   const [data, setData] = useState({
     labels: ["mon", "tues", "wed", "thurs", "fri", "sat", "sun"],
     datasets: [
@@ -114,7 +115,7 @@ function App() {
           <Cylinder percentageRemaining={percent} />
         </di>
         <di>
-          <Barchart chartData={data} />
+          <Barchart chartData={data} weightOfFullBottle={weightOfFullBottle} />
         </di>
       </div>
     </div>

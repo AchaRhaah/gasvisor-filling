@@ -1,7 +1,7 @@
 import React from "react";
 import "./styles.css";
 
-function Cylinder({ percentageRemaining }) {
+function Cylinder({ percentageRemaining, weightOfFullBottle }) {
   return (
     <div className="cylinder-container">
       <div className="cylinder">
