@@ -18,7 +18,11 @@
     margin-top: auto;
     background-color: #F1F1F1;
 }
-
+@media screen and (max-width: 1600px) {
+    .container {
+        height: 60%;
+    }
+}
 .chart-header-container {
     width: 100%;
     display: flex;
