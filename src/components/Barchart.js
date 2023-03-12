@@ -35,7 +35,7 @@ function Barchart({ chartData, weightOfFullBottle }) {
           }}
         />
         <h4 className="chart-heading">
-          initial weight of full bottle: {weightOfFullBottle} kg
+          Weight of full bottle: {weightOfFullBottle} kg
         </h4>
       </div>
       <h3 className="caption">Real time weekly usage</h3>
