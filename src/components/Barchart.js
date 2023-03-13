@@ -1,7 +1,7 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
 import "./barchart.css";
-function Barchart({ chartData, weightOfFullBottle }) {
+function Barchart({ chartData, usedWeight }) {
   return (
     <div className="barchart-container">
       <div className="container">
@@ -20,6 +20,12 @@ function Barchart({ chartData, weightOfFullBottle }) {
                 },
               },
               y: {
+                ticks: {
+                  beginAtZero: true,
+                  steps: 5,
+                  stepSize: 10,
+                  max: 110,
+                },
                 grid: {
                   drawBorder: false,
 
@@ -28,15 +34,27 @@ function Barchart({ chartData, weightOfFullBottle }) {
               },
             },
             plugins: {
+              tooltip: {
+                callbacks: {
+                  body: function (context) {
+                    return "body";
+                  },
+                  afterBody: function (context) {
+                    return `Used weight: ${
+                      usedWeight[context[0].dataIndex]
+                    } kg`;
+                  },
+                  label: function (context) {
+                    return ` Weight left: ${context.raw} kg`
+                  }
+                },
+              },
               legend: {
                 display: false,
               },
             },
           }}
         />
-        <h4 className="chart-heading">
-          Weight of full bottle: {weightOfFullBottle} kg
-        </h4>
       </div>
       <h3 className="caption">Real time weekly usage</h3>
     </div>

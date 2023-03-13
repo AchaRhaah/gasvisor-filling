@@ -1,5 +1,5 @@
 import React from "react";
-import "./styles.css";
+import "./cylinderStyles.css";
 
 function Cylinder({ percentageRemaining, weightOfFullBottle }) {
   return (

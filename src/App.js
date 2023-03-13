@@ -26,13 +26,20 @@ ChartJs.register(
 
 function App() {
   var startingWeightForDay = 105;
-  const currentWeight = 25;
   const backgroundArray = [];
   var apiData = [];
+  var weeklyUseageArr = [];
   const [percent, setPercent] = useState(100);
   const [weightOfFullBottle, setWeight] = useState(105);
-  const emptyDays = [2, 2, 2, 2, 2, 2, 2];
-  var dt = 7;
+  const currnetWeight = [90, 85, 77, 60, 50, 40, 35];
+  const date = new Date();
+  const dtvar = date.getDay()
+  const dt = 7;
+  var dob = new Date(date);
+  var dobArr = dob.toDateString().split(" ");
+  var dobFormat = dobArr[2] + " " + dobArr[1] + " " + dobArr[3];
+
+  const emptyDays = [10, 10, 10, 10, 10, 10, 10];
 
   useEffect(() => {
     fetch("https://api.gasvisor.eu/api/sensors/data", {
@@ -44,7 +51,6 @@ function App() {
       .then((data) => data.json())
       .then((data) => {
         apiData = data;
-        // console.log(apiData[data.length - 1].percentage_weight);
         setPercent(Math.trunc(apiData[data.length - 1].percentage_weight));
         setWeight(Math.trunc(apiData[data.length - 1].cylinder_weigth_full));
         console.log("percent", percent);
@@ -64,22 +70,40 @@ function App() {
     const usedWeight = startingWeightForDay - currnetWeight;
     startingWeightForDay = currnetWeight;
     var percentage = percentageRemaining(currnetWeight);
-    return { usedWeight, percentage };
+    return { usedWeight, percentage, currnetWeight };
   };
-  const weeklyUseageArr = [
-    weightUsedPerDay(90),
-    weightUsedPerDay(85),
-    weightUsedPerDay(77),
-    weightUsedPerDay(60),
-    weightUsedPerDay(50),
-    weightUsedPerDay(40),
-    weightUsedPerDay(35),
-  ];
+
+  const currentAmount = () =>
+    currnetWeight.map((item) => {
+      weeklyUseageArr.push(weightUsedPerDay(item));
+    });
+
+  const background = () => {
+    weeklyUseageArr.map((num, index) => {
+      dt - 1 < index
+        ? backgroundArray.push("#c9c9da")
+        : index === dt - 1 && num.percentage > 15
+        ? backgroundArray.push("#FDBD2B")
+        : num.percentage <= 15
+        ? backgroundArray.push("#E64646")
+        : backgroundArray.push("#2A297D");
+    });
+  };
+  currentAmount();
+  background();
 
   var weeklyData = weeklyUseageArr.map((num) => {
+    return num.currnetWeight;
+  });
+
+  weeklyData = weeklyData.slice(0, dt).concat(emptyDays.slice(0, 7 - dt))
+  console.log("dt", dt)
+  // weeklyData = weeklyData.slice(0, dt + 1).concat(emptyDays.slice(0, 7 - dt));
+
+  var usedWeight = weeklyUseageArr.map((num) => {
     return num.usedWeight;
   });
-  // weeklyData = weeklyData.slice(0, dt).concat(emptyDays.slice(0, 7 - dt));
+
   const [data, setData] = useState({
     labels: ["mon", "tues", "wed", "thurs", "fri", "sat", "sun"],
     datasets: [
@@ -92,20 +116,14 @@ function App() {
       },
     ],
   });
-  const background = () => {
-    weeklyUseageArr.map((num, index) => {
-      dt - 1 < index
-        ? backgroundArray.push("#c9c9da")
-        : index === dt - 1 && num.percentage > 15
-        ? backgroundArray.push("#FDBD2B")
-        : num.percentage <= 15
-        ? backgroundArray.push("#E64646")
-        : backgroundArray.push("#2A297D");
-    });
+  const tooltip = {
+    callbacks: {
+      beforeTitle: function (context) {
+        console.log(context);
+        return "before title";
+      },
+    },
   };
-
-  background();
-
   return (
     <div className="App">
       <Header />
@@ -115,8 +133,14 @@ function App() {
           <Cylinder percentageRemaining={percent} />
         </di>
         <di>
-          <Barchart chartData={data} weightOfFullBottle={weightOfFullBottle} />
+          <Barchart chartData={data} usedWeight={usedWeight} />
         </di>
+      </div>
+      <div className="info-box">
+        <h3 className="heading heading2">Real time details for {dobFormat}</h3>
+        <p className="info">Weight of full bottle: {weightOfFullBottle} kg</p>
+        <p className="info">Current weight: {currnetWeight[dtvar-1]} kg</p>
+        <p className="info">Weight used: {usedWeight[dtvar-1]} kg</p>
       </div>
     </div>
   );
