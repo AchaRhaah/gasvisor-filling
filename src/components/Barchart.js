@@ -45,7 +45,7 @@ function Barchart({ chartData, usedWeight }) {
                     } kg`;
                   },
                   label: function (context) {
-                    return ` Weight left: ${context.raw} kg`
+                    return ` current weight: ${context.raw} kg`
                   }
                 },
               },
