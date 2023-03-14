@@ -75,29 +75,22 @@ function App() {
         setWeight(Math.trunc(data[data.length - 1].cylinder_weigth_full));
 
         var arrFirstDate = new Date(data[0].date_created).getDate();
-        console.log("arrFirstDate",arrFirstDate)
 
 
         data.map((num, index) => {
           if (new Date(data[index].date_created).getDate() != arrFirstDate) {
-            console.log("yes")
             currnetWeight.push(Math.trunc(data[index - 1].calculated_weight))
             usedWeight.push(Math.trunc(data[index - 1].weight_used))
-            console.log(currnetWeight)
             arrFirstDate = new Date(data[index].date_created).getDate()
 
           }
           if (index === data.length - 1) {
             currnetWeight.push(Math.trunc(data[index].calculated_weight))
             usedWeight.push(Math.trunc(data[index].weight_used))
-            console.log("YES", index, data.length - 1)
-            console.log(currnetWeight)
             
           }
         })
 
-        // currnetWeight.push(Math.trunc(data[data.length - 1].calculated_weight))
-        // usedWeight.push(Math.trunc(data[data.length - 1].weight_used))
 
           
         currnetWeight = currnetWeight.slice(0, dt).concat(emptyDays.slice(0, 7 - dt))
