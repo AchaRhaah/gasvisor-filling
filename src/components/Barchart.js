@@ -1,7 +1,7 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
 import "./barchart.css";
-function Barchart({ chartData, usedWeight }) {
+function Barchart({ chartData, usedWeight, totalWeight }) {
   return (
     <div className="barchart-container">
       <div className="container">
@@ -39,6 +39,9 @@ function Barchart({ chartData, usedWeight }) {
                   body: function (context) {
                     return "body";
                   },
+                  beforeBody: function (context) {
+                    return `Total weight: ${totalWeight} kg`
+                  },
                   afterBody: function (context) {
                     return `Used weight: ${
                       usedWeight[context[0].dataIndex]
@@ -47,6 +50,7 @@ function Barchart({ chartData, usedWeight }) {
                   label: function (context) {
                     return ` current weight: ${context.raw} kg`
                   }
+                  
                 },
               },
               legend: {

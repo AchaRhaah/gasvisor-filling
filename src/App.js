@@ -116,7 +116,7 @@ function App() {
           <Cylinder percentageRemaining={percent} />
         </di>
         <di>
-          <Barchart chartData={data} usedWeight={usedWeight} />
+          <Barchart chartData={data} usedWeight={usedWeight} totalWeight={weightOfFullBottle } />
         </di>
       </div>
      {loading ?  <div className="info-box">
