@@ -52,7 +52,7 @@ function App() {
   
   
   useEffect(() => {
-    fetch("https://api.gasvisor.eu/api/sensors/data", {
+    fetch("https://api.gasvisor.eu/api/sensors/data/ID_78560", {
       method: "get",
       headers: {
         "Content-Type": "application/json",
@@ -66,7 +66,6 @@ function App() {
         var dateArr = date.toDateString().split(' ');
         var dateFormat = dateArr[2] + ' ' + dateArr[1] + ' ' + dateArr[3];
         setFetchedDate(dateFormat)
-        console.log("moment2",dateFormat)
 
         // date = date.toLocaleDateString
         
@@ -74,6 +73,29 @@ function App() {
         setLoding(true)
         setPercent(Math.trunc(data[data.length - 1].percentage_weight));
         setWeight(Math.trunc(data[data.length - 1].cylinder_weigth_full));
+
+        var arrFirstDate = new Date(data[0].date_created).getDate();
+        console.log("arrFirstDate",arrFirstDate)
+
+
+        data.map((num, index) => {
+          if (new Date(data[index].date_created).getDate() != arrFirstDate) {
+            console.log("yes")
+            currnetWeight.push(Math.trunc(data[index - 1].calculated_weight))
+            usedWeight.push(Math.trunc(data[index - 1].weight_used))
+            console.log(currnetWeight)
+            arrFirstDate = new Date(data[index].date_created).getDate()
+
+          }
+          if (index === data.length - 1) {
+            currnetWeight.push(Math.trunc(data[index].calculated_weight))
+            usedWeight.push(Math.trunc(data[index].weight_used))
+            console.log("YES", index, data.length - 1)
+            console.log(currnetWeight)
+            
+          }
+        })
+
         currnetWeight.push(Math.trunc(data[data.length - 1].calculated_weight))
         usedWeight.push(Math.trunc(data[data.length - 1].weight_used))
 
@@ -84,6 +106,7 @@ function App() {
       index === dt -1 ? backgroundArray.push("#fdbd2b") : index < dt-1 ? backgroundArray.push("#2a297d") : backgroundArray.push('#c9c9da')
     })
   }
+        
 
         background();
         setData({
