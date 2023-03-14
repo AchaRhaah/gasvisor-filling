@@ -137,9 +137,9 @@ function App() {
       </div>
      {loading ?  <div className="info-box">
         <h3 className="heading heading2">Real time details for {fetchedDate}</h3>
-        <p className="info">Weight of full cylinder: {Math.trunc(apiData[apiData.length - 1].cylinder_weigth_full)} kg</p>
-        <p className="info">Current weight of gas: {Math.trunc(apiData[apiData.length - 1].calculated_weight)} kg</p>
-        <p className="info">Weight used: {Math.trunc(apiData[apiData.length - 1].weight_used)} kg</p>
+        <p className="info">Weight of full cylinder: {parseFloat(apiData[apiData.length - 1].cylinder_weigth_full).toFixed(2)} kg</p>
+        <p className="info">Current weight of gas: {parseFloat(apiData[apiData.length - 1].calculated_weight).toFixed(2)} kg</p>
+        <p className="info">Weight used: {parseFloat(apiData[apiData.length - 1].weight_used).toFixed(2)} kg</p>
       </div> : ""}
      
     </div>
