@@ -96,8 +96,8 @@ function App() {
           }
         })
 
-        currnetWeight.push(Math.trunc(data[data.length - 1].calculated_weight))
-        usedWeight.push(Math.trunc(data[data.length - 1].weight_used))
+        // currnetWeight.push(Math.trunc(data[data.length - 1].calculated_weight))
+        // usedWeight.push(Math.trunc(data[data.length - 1].weight_used))
 
           
         currnetWeight = currnetWeight.slice(0, dt).concat(emptyDays.slice(0, 7 - dt))
