@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import {moment} from 'react-moment'
 import "./App.css";
 
 import {
@@ -30,12 +29,15 @@ function App() {
   const [percent, setPercent] = useState(100);
   const [weightOfFullBottle, setWeight] = useState(105);
   var currnetWeight = [];
+  var filteredDataArr = [];
+  var percentArr = []
   var [apiData, setApiData] = useState([]);
   var [usedWeight, setUsedWeight] = useState([])
   var [loading, setLoding] = useState(false)
   var [fetchedDate, setFetchedDate] = useState("")
   const emptyDays = [10, 10, 10, 10, 10, 10, 10];
-  const emptyDaysUsedWeight = [0,0,0,0,0,0,0]
+  const emptyDaysUsedWeight = [0, 0, 0, 0, 0, 0, 0]
+  
 
     const [data, setData] = useState({
     labels: ["mon", "tues", "wed", "thurs", "fri", "sat", "sun"],
@@ -77,31 +79,38 @@ function App() {
         var arrFirstDate = new Date(data[0].date_created).getDate();
 
 
-        data.map((num, index) => {
+        data.map((item, index) => {
           if (new Date(data[index].date_created).getDate() != arrFirstDate) {
             currnetWeight.push(Math.trunc(data[index - 1].calculated_weight))
             usedWeight.push(Math.trunc(data[index - 1].weight_used))
             arrFirstDate = new Date(data[index].date_created).getDate()
+            filteredDataArr.push(item)
 
           }
           if (index === data.length - 1) {
             currnetWeight.push(Math.trunc(data[index].calculated_weight))
             usedWeight.push(Math.trunc(data[index].weight_used))
+            filteredDataArr.push(item)
+
             
           }
         })
 
+        currnetWeight = currnetWeight.concat(emptyDays.slice(0, 7 - dt))
+        percentArr = filteredDataArr.map((num) => { return parseInt(num.percentage_weight) })
+        percentArr = percentArr.concat(emptyDaysUsedWeight.slice(0, 7 - dt))
 
-          
-        currnetWeight = currnetWeight.slice(0, dt).concat(emptyDays.slice(0, 7 - dt))
-  const background = () => {
-    currnetWeight.map((num, index) => { 
-      index === dt -1 ? backgroundArray.push("#fdbd2b") : index < dt-1 ? backgroundArray.push("#2a297d") : backgroundArray.push('#c9c9da')
-    })
-  }
-        
 
-        background();
+        console.log("percentArr", percentArr)
+        const background = () => {
+    
+          percentArr.map((num, index) => {
+            num < 15 && index < dt - 1? backgroundArray.push("#E64646") : index < dt-1 ? backgroundArray.push("#2A297D") : index === dt-1 ? backgroundArray.push("#FDBD2B") : backgroundArray.push("#c9c9da")
+          })
+  };
+    
+        background(); 
+        console.log("backgroundArray", backgroundArray)
         setData({
     labels: ["mon", "tues", "wed", "thurs", "fri", "sat", "sun"],
     datasets: [
@@ -114,7 +123,7 @@ function App() {
       },
     ],
         })
-        usedWeight = usedWeight.slice(0, dt).concat(emptyDaysUsedWeight.slice(0, 7 - dt))
+        usedWeight = usedWeight.concat(emptyDaysUsedWeight.slice(0, 7 - dt))
         setUsedWeight(usedWeight)
       })
       .catch((err) => console.log(err));
@@ -129,7 +138,7 @@ function App() {
       <h1 className="heading">Cylinder 1</h1>
       <div className="graph-container">
         <di>
-          <Cylinder percentageRemaining={percent} />
+          <Cylinder percentageRemaining={10} />
         </di>
         <di>
           <Barchart chartData={data} usedWeight={usedWeight} totalWeight={weightOfFullBottle } />

@@ -16,7 +16,7 @@
 .right {
     display: flex;
     align-items: center;
-    width: 17em;
+    width: 18.5em;
     justify-content: space-between;
     /* justify-content: center; */
 }

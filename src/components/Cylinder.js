@@ -11,11 +11,18 @@ function Cylinder({ percentageRemaining, weightOfFullBottle }) {
           <div
             style={{
               height: `${percentageRemaining}%`,
+              background: `${percentageRemaining <= 15 ? "#E64646": "#FDBD2B"}`
             }}
             className="level"
           >
+            {percentageRemaining <= 15 ?  <div>
+            <div className="wave wave2"></div>
+            <div className="wave wave2"></div>
+            </div> :  <div>
             <div className="wave"></div>
             <div className="wave"></div>
+            </div>}
+           
           </div>
         </div>
       </div>

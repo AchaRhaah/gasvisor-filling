@@ -10,7 +10,7 @@ function Header() {
           <img src={Logo} alt="" className="gas-logo" />
         </div>
         <div className="right">
-          <p className="welcome">Welcome back, MartMich!</p>
+          <p className="welcome">Welcome back, David Firmin!</p>
           <img
             className="profile"
             alt=""
