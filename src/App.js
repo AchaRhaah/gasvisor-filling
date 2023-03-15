@@ -54,7 +54,7 @@ function App() {
   
   
   useEffect(() => {
-    fetch("https://api.gasvisor.eu/api/sensors/data/ID_78560", {
+    fetch("https://api.gasvisor.eu/api/sensors/data/gasvisor_sensor_02", {
       method: "get",
       headers: {
         "Content-Type": "application/json",
