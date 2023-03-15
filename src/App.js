@@ -138,7 +138,7 @@ function App() {
       <h1 className="heading">Cylinder 1</h1>
       <div className="graph-container">
         <di>
-          <Cylinder percentageRemaining={10} />
+          <Cylinder percentageRemaining={percent} />
         </di>
         <di>
           <Barchart chartData={data} usedWeight={usedWeight} totalWeight={weightOfFullBottle } />
