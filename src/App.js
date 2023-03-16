@@ -28,22 +28,21 @@ function App() {
   const backgroundArray = [];
   const [percent, setPercent] = useState(100);
   const [weightOfFullBottle, setWeight] = useState(105);
-  var currnetWeight = [];
+  var currentWeight = [5,5,5,5,5,5,5];
   var filteredDataArr = [];
-  var percentArr = []
+  var [usedWeight, setUsedWeight] = useState([0,0,0,0,0,0,0])
+  var percentArr = ['none','none','none','none','none','none','none']
   var [apiData, setApiData] = useState([]);
-  var [usedWeight, setUsedWeight] = useState([])
   var [loading, setLoding] = useState(false)
   var [fetchedDate, setFetchedDate] = useState("")
   const emptyDays = [10, 10, 10, 10, 10, 10, 10];
-  const emptyDaysUsedWeight = [0, 0, 0, 0, 0, 0, 0]
   
 
     const [data, setData] = useState({
     labels: ["mon", "tues", "wed", "thurs", "fri", "sat", "sun"],
     datasets: [
       {
-        data: currnetWeight,
+        data: currentWeight,
         backgroundColor: backgroundArray,
         barThickness: 30,
         borderRadius: 20,
@@ -63,59 +62,54 @@ function App() {
       .then((data) => data.json())
       .then((data) => {
         setApiData(data)
+ // To get the currnet day's date in words format
         var date = new Date(data[data.length - 1].date_created)
         const dt = date.getDay()
         var dateArr = date.toDateString().split(' ');
         var dateFormat = dateArr[2] + ' ' + dateArr[1] + ' ' + dateArr[3];
         setFetchedDate(dateFormat)
 
-        // date = date.toLocaleDateString
         
 
         setLoding(true)
         setPercent(Math.trunc(data[data.length - 1].percentage_weight));
         setWeight(Math.trunc(data[data.length - 1].cylinder_weigth_full));
-
+// variables needed to separate api data into days
         var arrFirstDate = new Date(data[0].date_created).getDate();
-
+        var arrDayIndex = new Date(data[0].date_created).getDay();
 
         data.map((item, index) => {
+// if date of index is different from the date of the previous object then it is a new day
           if (new Date(data[index].date_created).getDate() != arrFirstDate) {
-            currnetWeight.push(Math.trunc(data[index - 1].calculated_weight))
-            usedWeight.push(Math.trunc(data[index - 1].weight_used))
+            currentWeight.splice(arrDayIndex - 1, 1, item.calculated_weight)
+            usedWeight.splice(arrDayIndex - 1, 1, item.weight_used)
             arrFirstDate = new Date(data[index].date_created).getDate()
+            arrDayIndex = new Date(data[index].date_created).getDay()
             filteredDataArr.push(item)
-
           }
+// The last object in the array is the most current reading for that day
           if (index === data.length - 1) {
-            currnetWeight.push(Math.trunc(data[index].calculated_weight))
-            usedWeight.push(Math.trunc(data[index].weight_used))
+            currentWeight.splice(arrDayIndex - 1, 1, item.calculated_weight);
+            usedWeight.splice(arrDayIndex - 1, 1, item.weight_used);
+            percentArr.splice(arrDayIndex - 1, 1, item.percentage_weight);
             filteredDataArr.push(item)
-
-            
           }
         })
-
-        currnetWeight = currnetWeight.concat(emptyDays.slice(0, 7 - dt))
-        percentArr = filteredDataArr.map((num) => { return parseInt(num.percentage_weight) })
-        percentArr = percentArr.concat(emptyDaysUsedWeight.slice(0, 7 - dt))
-
-
-        console.log("percentArr", percentArr)
+        setUsedWeight(usedWeight)
+        currentWeight = currentWeight.concat(emptyDays.slice(0, 7 - dt))
         const background = () => {
-    
+          console.log("percentArr", percentArr)
           percentArr.map((num, index) => {
-            num < 15 && index < dt - 1? backgroundArray.push("#E64646") : index < dt-1 ? backgroundArray.push("#2A297D") : index === dt-1 ? backgroundArray.push("#FDBD2B") : backgroundArray.push("#c9c9da")
+            num === 'none' ? backgroundArray.push("#c9c9da") :  num <= 15 && index <= dt - 1? backgroundArray.push("#E64646") : index < dt-1 ? backgroundArray.push("#2A297D") : index === dt-1 ? backgroundArray.push("#FDBD2B") : backgroundArray.push("#c9c9da")
           })
   };
     
         background(); 
-        console.log("backgroundArray", backgroundArray)
         setData({
     labels: ["mon", "tues", "wed", "thurs", "fri", "sat", "sun"],
     datasets: [
       {
-        data: currnetWeight,
+        data: currentWeight,
         backgroundColor: backgroundArray,
         barThickness: 30,
         borderRadius: 20,
@@ -123,8 +117,6 @@ function App() {
       },
     ],
         })
-        usedWeight = usedWeight.concat(emptyDaysUsedWeight.slice(0, 7 - dt))
-        setUsedWeight(usedWeight)
       })
       .catch((err) => console.log(err));
   }, []);
