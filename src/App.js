@@ -27,7 +27,7 @@ ChartJs.register(
 function App() {
   const backgroundArray = [];
   const [percent, setPercent] = useState(100);
-  const [weightOfFullBottle, setWeight] = useState(105);
+  const [weightOfFullBottle, setWeight] = useState(0);
   var currentWeight = [0, 0, 0, 0, 0, 0, 0];
   var [usedWeight, setUsedWeight] = useState([0,0,0,0,0,0,0])
   var percentArr = ['none','none','none','none','none','none','none']
@@ -60,7 +60,7 @@ function App() {
       .then((data) => data.json())
       .then((data) => {
         setApiData(data)
-        currentWeight = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5];
+        currentWeight = [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1];
         // To get the currnet day's date in words format
         var date = new Date(data[data.length - 1].date_created)
         const dt = date.getDay()
@@ -74,7 +74,7 @@ function App() {
         
 
         setPercent(Math.trunc(data[data.length - 1].percentage_weight));
-        setWeight(Math.trunc(data[data.length - 1].cylinder_weigth_full));
+        setWeight(data[data.length - 1].cylinder_weight_empty);
 // variables needed to separate api data into days
         var arrFirstDate = new Date(data[0].date_created).getDate();
         var arrDayIndex = new Date(data[0].date_created).getDay();
@@ -96,7 +96,6 @@ function App() {
         })
         setUsedWeight(usedWeight)
         const background = () => {
-          console.log("percentArr", percentArr)
           percentArr.map((num, index) => {
             num === 'none' ? backgroundArray.push("#c9c9da") :  num <= 15 && index <= dt - 1? backgroundArray.push("#E64646") : index < dt-1 ? backgroundArray.push("#2A297D") : index === dt-1 ? backgroundArray.push("#FDBD2B") : backgroundArray.push("#c9c9da")
           })
@@ -132,12 +131,13 @@ function App() {
           <Cylinder percentageRemaining={percent} />
         </di>
         <di>
+
           <Barchart chartData={data} usedWeight={usedWeight} totalWeight={weightOfFullBottle } />
         </di>
       </div>
      {loading ?  <div className="info-box">
         <h3 className="heading heading2">Real time details for {fetchedDate}</h3>
-        <p className="info">Weight of full cylinder: {parseFloat(apiData[apiData.length - 1].cylinder_weigth_full).toFixed(2)} kg</p>
+        <p className="info">Weight of full cylinder: {parseFloat(weightOfFullBottle).toFixed(2)} kg</p>
         <p className="info">Current weight of gas: {parseFloat(apiData[apiData.length - 1].calculated_weight).toFixed(2)} kg</p>
         <p className="info">Weight used: {parseFloat(apiData[apiData.length - 1].weight_used).toFixed(2)} kg</p>
       </div> : ""}

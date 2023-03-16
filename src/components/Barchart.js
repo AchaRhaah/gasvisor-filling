@@ -2,6 +2,7 @@ import React from "react";
 import { Bar } from "react-chartjs-2";
 import "./barchart.css";
 function Barchart({ chartData, usedWeight, totalWeight }) {
+
   return (
     <div className="barchart-container">
       <div className="container">
