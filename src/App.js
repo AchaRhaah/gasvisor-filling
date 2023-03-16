@@ -82,16 +82,18 @@ function App() {
         data.map((item, index) => {
 // if date of index is different from the date of the previous object then it is a new day
           if (new Date(data[index].date_created).getDate() != arrFirstDate) {
-            currentWeight.splice(arrDayIndex - 1, 1, item.calculated_weight)
+            currentWeight.splice(arrDayIndex - 1, 1, Math.trunc(item.calculated_weight))
+            
+            
             usedWeight.splice(arrDayIndex - 1, 1, item.weight_used)
             arrFirstDate = new Date(data[index].date_created).getDate()
             arrDayIndex = new Date(data[index].date_created).getDay()
           }
-// The last object in the array is the most current reading for that day
+          // The last object in the array is the most current reading for that day
           if (index === data.length - 1) {
-            currentWeight.splice(arrDayIndex - 1, 1, item.calculated_weight);
-            usedWeight.splice(arrDayIndex - 1, 1, item.weight_used);
-            percentArr.splice(arrDayIndex - 1, 1, item.percentage_weight);
+            currentWeight.splice(arrDayIndex - 1, 1, parseFloat(item.calculated_weight).toFixed(2));
+            usedWeight.splice(arrDayIndex - 1, 1, parseFloat(item.weight_used).toFixed(2));
+            percentArr.splice(arrDayIndex - 1, 1, parseFloat(item.percentage_weight).toFixed(2));
           }
         })
         setUsedWeight(usedWeight)
@@ -132,7 +134,7 @@ function App() {
         </di>
         <di>
 
-          <Barchart chartData={data} usedWeight={usedWeight} totalWeight={weightOfFullBottle } />
+          <Barchart chartData={data} usedWeight={usedWeight} totalWeight={parseFloat(weightOfFullBottle).toFixed(2) } />
         </di>
       </div>
      {loading ?  <div className="info-box">
