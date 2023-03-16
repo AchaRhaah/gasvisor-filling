@@ -7,7 +7,7 @@ function Barchart({ chartData, usedWeight, totalWeight }) {
       <div className="container">
         <div className="chart-header-container">
           <h4 className="chart-heading">Weekly usage/kg</h4>
-          <h4 className="chart-heading">March, 12 - March, 18</h4>
+          <h4 className="chart-heading">March, 13 - March, 19</h4>
         </div>
         <Bar
           data={chartData}
