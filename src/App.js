@@ -28,14 +28,12 @@ function App() {
   const backgroundArray = [];
   const [percent, setPercent] = useState(100);
   const [weightOfFullBottle, setWeight] = useState(105);
-  var currentWeight = [5,5,5,5,5,5,5];
-  var filteredDataArr = [];
+  var currentWeight = [0, 0, 0, 0, 0, 0, 0];
   var [usedWeight, setUsedWeight] = useState([0,0,0,0,0,0,0])
   var percentArr = ['none','none','none','none','none','none','none']
   var [apiData, setApiData] = useState([]);
   var [loading, setLoding] = useState(false)
   var [fetchedDate, setFetchedDate] = useState("")
-  const emptyDays = [10, 10, 10, 10, 10, 10, 10];
   
 
     const [data, setData] = useState({
@@ -62,16 +60,19 @@ function App() {
       .then((data) => data.json())
       .then((data) => {
         setApiData(data)
- // To get the currnet day's date in words format
+        currentWeight = [5, 5, 5, 5, 5, 5, 5];
+        // To get the currnet day's date in words format
         var date = new Date(data[data.length - 1].date_created)
         const dt = date.getDay()
         var dateArr = date.toDateString().split(' ');
         var dateFormat = dateArr[2] + ' ' + dateArr[1] + ' ' + dateArr[3];
         setFetchedDate(dateFormat)
-
+        
         
 
         setLoding(true)
+        
+
         setPercent(Math.trunc(data[data.length - 1].percentage_weight));
         setWeight(Math.trunc(data[data.length - 1].cylinder_weigth_full));
 // variables needed to separate api data into days
@@ -85,24 +86,22 @@ function App() {
             usedWeight.splice(arrDayIndex - 1, 1, item.weight_used)
             arrFirstDate = new Date(data[index].date_created).getDate()
             arrDayIndex = new Date(data[index].date_created).getDay()
-            filteredDataArr.push(item)
           }
 // The last object in the array is the most current reading for that day
           if (index === data.length - 1) {
             currentWeight.splice(arrDayIndex - 1, 1, item.calculated_weight);
             usedWeight.splice(arrDayIndex - 1, 1, item.weight_used);
             percentArr.splice(arrDayIndex - 1, 1, item.percentage_weight);
-            filteredDataArr.push(item)
           }
         })
         setUsedWeight(usedWeight)
-        currentWeight = currentWeight.concat(emptyDays.slice(0, 7 - dt))
         const background = () => {
           console.log("percentArr", percentArr)
           percentArr.map((num, index) => {
             num === 'none' ? backgroundArray.push("#c9c9da") :  num <= 15 && index <= dt - 1? backgroundArray.push("#E64646") : index < dt-1 ? backgroundArray.push("#2A297D") : index === dt-1 ? backgroundArray.push("#FDBD2B") : backgroundArray.push("#c9c9da")
           })
-  };
+        };
+        
     
         background(); 
         setData({
