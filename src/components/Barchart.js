@@ -1,7 +1,8 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
 import "./barchart.css";
-function Barchart({ chartData, usedWeight, totalWeight }) {
+function Barchart({ chartData, usedWeight, totalWeight, maxYscaleVal }) {
+
 
   return (
     <div className="barchart-container">
@@ -21,11 +22,11 @@ function Barchart({ chartData, usedWeight, totalWeight }) {
                 },
               },
               y: {
+                beginAtZero: true,
+                min: 0,
+                max: maxYscaleVal,
                 ticks: {
-                  beginAtZero: true,
-                  steps: 5,
-                  stepSize: 10,
-                  max: 110,
+                  stepSize: 2,
                 },
                 grid: {
                   drawBorder: false,

@@ -29,6 +29,8 @@ function App() {
   const [percent, setPercent] = useState(100);
   const [weightOfFullBottle, setWeight] = useState(0);
   var currentWeight = [0, 0, 0, 0, 0, 0, 0];
+  var [maxYscaleVal, setMaxYScale] = useState(0)
+  var cylinderWeight = [];
   var [usedWeight, setUsedWeight] = useState([0,0,0,0,0,0,0])
   var percentArr = ['none','none','none','none','none','none','none']
   var [apiData, setApiData] = useState([]);
@@ -74,12 +76,14 @@ function App() {
         
 
         setPercent(Math.trunc(data[data.length - 1].percentage_weight));
-        setWeight(data[data.length - 1].cylinder_weight_empty);
+        setWeight(data[data.length - 1].cylinder_weight);
 // variables needed to separate api data into days
         var arrFirstDate = new Date(data[0].date_created).getDate();
         var arrDayIndex = new Date(data[0].date_created).getDay();
 
         data.map((item, index) => {
+          cylinderWeight.push(parseInt(item.cylinder_weight))
+          console.log(cylinderWeight)
 // if date of index is different from the date of the previous object then it is a new day
           if (new Date(data[index].date_created).getDate() != arrFirstDate) {
             currentWeight.splice(arrDayIndex - 1, 1, Math.trunc(item.calculated_weight))
@@ -105,6 +109,9 @@ function App() {
         
     
         background(); 
+        maxYscaleVal = Math.max.apply(null, cylinderWeight)
+        setMaxYScale(maxYscaleVal)
+        console.log("maxYscaleVal", maxYscaleVal)
         setData({
     labels: ["mon", "tues", "wed", "thurs", "fri", "sat", "sun"],
     datasets: [
@@ -134,7 +141,7 @@ function App() {
         </di>
         <di>
 
-          <Barchart chartData={data} usedWeight={usedWeight} totalWeight={parseFloat(weightOfFullBottle).toFixed(2) } />
+          <Barchart chartData={data} usedWeight={usedWeight} maxYscaleVal={ maxYscaleVal} totalWeight={parseFloat(weightOfFullBottle).toFixed(2) } />
         </di>
       </div>
      {loading ?  <div className="info-box">
