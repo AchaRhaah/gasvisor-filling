@@ -60,7 +60,7 @@ function App() {
       .then((data) => data.json())
       .then((data) => {
         setApiData(data)
-        currentWeight = [5, 5, 5, 5, 5, 5, 5];
+        currentWeight = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5];
         // To get the currnet day's date in words format
         var date = new Date(data[data.length - 1].date_created)
         const dt = date.getDay()
