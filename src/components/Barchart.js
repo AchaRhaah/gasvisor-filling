@@ -26,7 +26,7 @@ function Barchart({ chartData, usedWeight, totalWeight, maxYscaleVal }) {
                 min: 0,
                 max: maxYscaleVal,
                 ticks: {
-                  stepSize: 2,
+                  stepSize: 5,
                 },
                 grid: {
                   drawBorder: false,
@@ -38,10 +38,10 @@ function Barchart({ chartData, usedWeight, totalWeight, maxYscaleVal }) {
             plugins: {
               tooltip: {
                 callbacks: {
-                  body: function (context) {
+                  body: function () {
                     return "body";
                   },
-                  beforeBody: function (context) {
+                  beforeBody: function () {
                     return `Total weight: ${maxYscaleVal} kg`
                   },
                   afterBody: function (context) {
@@ -61,6 +61,8 @@ function Barchart({ chartData, usedWeight, totalWeight, maxYscaleVal }) {
             },
           }}
         />
+        {console.log("maxYscaleVal", maxYscaleVal)}
+
       </div>
       <h3 className="caption">Real time weekly usage</h3>
     </div>

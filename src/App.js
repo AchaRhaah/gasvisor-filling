@@ -69,28 +69,28 @@ function App() {
         var dateArr = date.toDateString().split(' ');
         var dateFormat = dateArr[2] + ' ' + dateArr[1] + ' ' + dateArr[3];
         setFetchedDate(dateFormat)
-        
-        
-
         setLoding(true)
-        
-
         setPercent(Math.trunc(data[data.length - 1].percentage_weight));
         setWeight(data[data.length - 1].cylinder_weight);
+
 // variables needed to separate api data into days
+        
         var arrFirstDate = new Date(data[0].date_created).getDate();
         var arrDayIndex = new Date(data[0].date_created).getDay();
-
         data.map((item, index) => {
           cylinderWeight.push(parseInt(item.cylinder_weight))
+
 // if date of index is different from the date of the previous object then it is a new day
+          
           if (new Date(data[index].date_created).getDate() != arrFirstDate) {
             currentWeight.splice(arrDayIndex - 1, 1, Math.trunc(item.calculated_weight))
             usedWeight.splice(arrDayIndex - 1, 1, item.weight_used)
             arrFirstDate = new Date(data[index].date_created).getDate()
             arrDayIndex = new Date(data[index].date_created).getDay()
           }
-          // The last object in the array is the most current reading for that day
+
+// The last object in the array is the most current reading for that day
+
           if (index === data.length - 1) {
             currentWeight.splice(arrDayIndex - 1, 1, parseFloat(item.calculated_weight).toFixed(2));
             usedWeight.splice(arrDayIndex - 1, 1, parseFloat(item.weight_used).toFixed(2));
@@ -107,7 +107,8 @@ function App() {
     
         background(); 
         maxYscaleVal = data[data.length - 1].cylinder_weight_full - data[data.length - 1].cylinder_weight_empty
-        setMaxYScale(parseFloat(maxYscaleVal).toFixed(1))
+        setMaxYScale(maxYscaleVal)
+        console.log("maxYscaleVal", maxYscaleVal)
         setData({
     labels: ["mon", "tues", "wed", "thurs", "fri", "sat", "sun"],
     datasets: [
@@ -124,9 +125,6 @@ function App() {
       .catch((err) => console.log(err));
   }, []);
 
-
-  
-
   return (
     <div className="App">
       <Header />
@@ -142,10 +140,10 @@ function App() {
       </div>
      {loading ?  <div className="info-box">
         <h3 className="heading heading2">Real time details for {fetchedDate}</h3>
-        <p className="info">Weight of full cylinder: {parseFloat(apiData[apiData.length - 1].cylinder_weight_full).toFixed(2)} kg</p>
+        <p className="info">Weight of full cylinder: {maxYscaleVal} kg</p>
         <p className="info">Current weight of gas: {parseFloat(apiData[apiData.length - 1].calculated_weight).toFixed(2)} kg</p>
         <p className="info">Weight used: {parseFloat(apiData[apiData.length - 1].weight_used).toFixed(2)} kg</p>
-      </div> : ""}
+      </div> : <></>}
      
     </div>
   );
