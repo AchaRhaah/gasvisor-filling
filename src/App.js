@@ -106,8 +106,8 @@ function App() {
         
     
         background(); 
-        maxYscaleVal = Math.max.apply(null, cylinderWeight)
-        setMaxYScale(maxYscaleVal)
+        maxYscaleVal = data[data.length - 1].cylinder_weight_full - data[data.length - 1].cylinder_weight_empty
+        setMaxYScale(parseFloat(maxYscaleVal).toFixed(1))
         setData({
     labels: ["mon", "tues", "wed", "thurs", "fri", "sat", "sun"],
     datasets: [
@@ -137,12 +137,12 @@ function App() {
         </di>
         <di>
 
-          <Barchart chartData={data} usedWeight={usedWeight} maxYscaleVal={ maxYscaleVal} totalWeight={parseFloat(weightOfFullBottle).toFixed(2) } />
+          <Barchart chartData={data} usedWeight={usedWeight} maxYscaleVal={ maxYscaleVal} />
         </di>
       </div>
      {loading ?  <div className="info-box">
         <h3 className="heading heading2">Real time details for {fetchedDate}</h3>
-        <p className="info">Weight of full cylinder: {parseFloat(weightOfFullBottle).toFixed(2)} kg</p>
+        <p className="info">Weight of full cylinder: {parseFloat(apiData[apiData.length - 1].cylinder_weight_full).toFixed(2)} kg</p>
         <p className="info">Current weight of gas: {parseFloat(apiData[apiData.length - 1].calculated_weight).toFixed(2)} kg</p>
         <p className="info">Weight used: {parseFloat(apiData[apiData.length - 1].weight_used).toFixed(2)} kg</p>
       </div> : ""}

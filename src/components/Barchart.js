@@ -42,7 +42,7 @@ function Barchart({ chartData, usedWeight, totalWeight, maxYscaleVal }) {
                     return "body";
                   },
                   beforeBody: function (context) {
-                    return `Total weight: ${totalWeight} kg`
+                    return `Total weight: ${maxYscaleVal} kg`
                   },
                   afterBody: function (context) {
                     return `Used weight: ${
