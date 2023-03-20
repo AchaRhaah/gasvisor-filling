@@ -83,7 +83,6 @@ function App() {
 
         data.map((item, index) => {
           cylinderWeight.push(parseInt(item.cylinder_weight))
-          console.log(cylinderWeight)
 // if date of index is different from the date of the previous object then it is a new day
           if (new Date(data[index].date_created).getDate() != arrFirstDate) {
             currentWeight.splice(arrDayIndex - 1, 1, Math.trunc(item.calculated_weight))
@@ -111,7 +110,6 @@ function App() {
         background(); 
         maxYscaleVal = Math.max.apply(null, cylinderWeight)
         setMaxYScale(maxYscaleVal)
-        console.log("maxYscaleVal", maxYscaleVal)
         setData({
     labels: ["mon", "tues", "wed", "thurs", "fri", "sat", "sun"],
     datasets: [
