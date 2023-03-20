@@ -86,8 +86,6 @@ function App() {
 // if date of index is different from the date of the previous object then it is a new day
           if (new Date(data[index].date_created).getDate() != arrFirstDate) {
             currentWeight.splice(arrDayIndex - 1, 1, Math.trunc(item.calculated_weight))
-            
-            
             usedWeight.splice(arrDayIndex - 1, 1, item.weight_used)
             arrFirstDate = new Date(data[index].date_created).getDate()
             arrDayIndex = new Date(data[index].date_created).getDay()
