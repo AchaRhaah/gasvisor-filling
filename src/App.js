@@ -27,7 +27,6 @@ ChartJs.register(
 function App() {
   const backgroundArray = [];
   const [percent, setPercent] = useState(100);
-  const [weightOfFullBottle, setWeight] = useState(0);
   var currentWeight = [0, 0, 0, 0, 0, 0, 0];
   var [maxYscaleVal, setMaxYScale] = useState(0)
   var cylinderWeight = [];
@@ -71,7 +70,6 @@ function App() {
         setFetchedDate(dateFormat)
         setLoding(true)
         setPercent(Math.trunc(data[data.length - 1].percentage_weight));
-        setWeight(data[data.length - 1].cylinder_weight);
 
 // variables needed to separate api data into days
         
@@ -108,7 +106,6 @@ function App() {
         background(); 
         maxYscaleVal = data[data.length - 1].cylinder_weight_full - data[data.length - 1].cylinder_weight_empty
         setMaxYScale(maxYscaleVal)
-        console.log("maxYscaleVal", maxYscaleVal)
         setData({
     labels: ["mon", "tues", "wed", "thurs", "fri", "sat", "sun"],
     datasets: [
