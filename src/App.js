@@ -73,19 +73,12 @@ function App() {
 
         var arrFirstDate = new Date(data[0].date_created).getDate();
         var arrDayIndex = new Date(data[0].date_created).getDay();
-        console.log("**arrDayIndex", data[0].date_created);
         data.map((item, index) => {
           cylinderWeight.push(parseInt(item.cylinder_weight));
 
           // if date of index is different from the date of the previous object then it is a new day
 
           if (new Date(data[index].date_created).getDate() != arrFirstDate) {
-            console.log(
-              " info: dare ,day",
-              arrFirstDate,
-              arrDayIndex,
-              parseFloat(data[index - 1].calculated_weight).toFixed(2)
-            );
             currentWeight.splice(
               arrDayIndex - 1,
               1,
