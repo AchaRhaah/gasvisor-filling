@@ -48,8 +48,7 @@ function App() {
       },
     ],
   });
-
-  useEffect(() => {
+  const display = () => {
     fetch("https://api.gasvisor.eu/api/sensors/data/gasvisor_sensor_02", {
       method: "get",
       headers: {
@@ -150,6 +149,12 @@ function App() {
         });
       })
       .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    const t = setInterval(display, 2000);
+
+    return () => clearInterval(t);
   }, []);
 
   return (
