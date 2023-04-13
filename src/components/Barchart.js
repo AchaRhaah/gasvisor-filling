@@ -9,7 +9,7 @@ function Barchart({ chartData, usedWeight, totalWeight, maxYscaleVal }) {
       <div className="container">
         <div className="chart-header-container">
           <h4 className="chart-heading">Weekly usage/kg</h4>
-          <h4 className="chart-heading">March, 13 - March, 19</h4>
+          <h4 className="chart-heading">April, 10 - April, 17</h4>
         </div>
         <Bar
           data={chartData}
@@ -42,7 +42,7 @@ function Barchart({ chartData, usedWeight, totalWeight, maxYscaleVal }) {
                     return "body";
                   },
                   beforeBody: function () {
-                    return `Total weight: ${maxYscaleVal} kg`
+                    return `Total weight: ${maxYscaleVal} kg`;
                   },
                   afterBody: function (context) {
                     return `Used weight: ${
@@ -50,9 +50,8 @@ function Barchart({ chartData, usedWeight, totalWeight, maxYscaleVal }) {
                     } kg`;
                   },
                   label: function (context) {
-                    return ` current weight: ${context.raw} kg`
-                  }
-                  
+                    return ` current weight: ${context.raw} kg`;
+                  },
                 },
               },
               legend: {
@@ -61,8 +60,6 @@ function Barchart({ chartData, usedWeight, totalWeight, maxYscaleVal }) {
             },
           }}
         />
-        {console.log("maxYscaleVal", maxYscaleVal)}
-
       </div>
       <h3 className="caption">Real time weekly usage</h3>
     </div>
