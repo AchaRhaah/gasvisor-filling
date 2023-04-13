@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/gasvisor-filling/static/css/main.b67d2c2e.css",
+    "main.css": "/gasvisor-filling/static/css/main.a19b909e.css",
     "main.js": "/gasvisor-filling/static/js/main.479d4b51.js",
     "static/js/787.aa7a628b.chunk.js": "/gasvisor-filling/static/js/787.aa7a628b.chunk.js",
     "static/media/david.png": "/gasvisor-filling/static/media/david.36bd5042b31f98329262.png",
     "static/media/logo.svg": "/gasvisor-filling/static/media/logo.8093119aebd6ec9607dc4deae5ce563e.svg",
     "index.html": "/gasvisor-filling/index.html",
-    "main.b67d2c2e.css.map": "/gasvisor-filling/static/css/main.b67d2c2e.css.map",
+    "main.a19b909e.css.map": "/gasvisor-filling/static/css/main.a19b909e.css.map",
     "main.479d4b51.js.map": "/gasvisor-filling/static/js/main.479d4b51.js.map",
     "787.aa7a628b.chunk.js.map": "/gasvisor-filling/static/js/787.aa7a628b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.b67d2c2e.css",
+    "static/css/main.a19b909e.css",
     "static/js/main.479d4b51.js"
   ]
 }
